@@ -6,27 +6,43 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import handlers.UserHandler;
-import modelo.Participante;
+import model.Participante;
 
 
 @Path("/user")
 public class User {
 
+	@GET
+	@Path("query/{cpf}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getUserByCPF(@QueryParam("cpf") String cpf) {
+		Participante par = UserHandler.handleGetUserByCPF(cpf);
+		Integer id = par.getId();
+		if (id > 0) {
+			Gson gson = new GsonBuilder().setPrettyPrinting().create();
+			String userJSON = gson.toJson(par);
+			return Response.status(200).entity(userJSON).build();
+		} else {
+			String errorJSON = "{\"errorMsg\": \"It wasn't possible to find user " + cpf + "\"}";
+			return Response.status(400).entity(errorJSON).build();
+		}
+	}
+
 	@POST
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getHelloWorld(String participante) {
+	public Response postUser(String userJSON) {
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
-		Participante novoParticipante = gson.fromJson(participante, Participante.class);
-		String nome = novoParticipante.getNome();
-		Integer id = UserHandler.handleParticipanteCreation(novoParticipante);
-		String successMsg = "{\"successMsg\": \"It was possible to create user " + nome + "\"}";
-		String errorMsg = "{\"errorMsg\": \"It wasn't possible to create user " + nome + "\"}";
+		Participante newUser = gson.fromJson(userJSON, Participante.class);
+		String nome = newUser.getNome();
+		Integer id = UserHandler.handleUserCreation(newUser);
 		if (id > 0) {
-			return Response.status(200).entity(successMsg).build();
+			String successJSON = "{\"successMsg\": \"It was possible to create user " + nome + "\"}";
+			return Response.status(200).entity(successJSON).build();
 		} else {
-			return Response.status(400).entity(errorMsg).build();
+			String errorJSON = "{\"errorMsg\": \"It wasn't possible to create user " + nome + "\"}";
+			return Response.status(400).entity(errorJSON).build();
 		}
 	}
 

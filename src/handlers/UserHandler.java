@@ -1,12 +1,17 @@
 package handlers;
-import modelo.Participante;
-
+import model.Participante;
 import java.sql.*;
 
 public class UserHandler {
-	public static Integer handleParticipanteCreation(Participante par) {
+	public static Participante handleGetUserByCPF(String cpf) {
 		Connection con = DBUtils.getDBConnection();
-		DBUtils.listConnectionWarnings(con);
+		Participante par = selectUser(con, cpf);
+		DBUtils.closeConnection(con);
+		return par;
+	}
+
+	public static Integer handleUserCreation(Participante par) {
+		Connection con = DBUtils.getDBConnection();
 		Integer idCarteira = createWallet(con);
 		par.setSituacao("Ativo");
 		par.setIdCarteira(idCarteira);
@@ -14,6 +19,29 @@ public class UserHandler {
 		DBUtils.closeConnection(con);
 		return id;
 	}
+
+	private static Participante selectUser(Connection con, String userCPF) {
+		System.out.println("Selecting user...");
+		String sqlQuery = "SELECT * FROM Participante WHERE cpf = " + userCPF;
+		Statement stmt = null;
+		Participante par = new Participante(-1);
+		try {
+			stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(sqlQuery);
+			while(rs.next()){
+				par.setId(rs.getInt("id"));
+				par.setIdCarteira(rs.getInt("idCarteira"));
+				par.setDataInscricao(rs.getDate("dataInscricao"));
+				par.setSituacao(rs.getString("situacao"));
+				par.setCpf(rs.getString("cpf"));
+				par.setNome(rs.getString("nome"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return par;
+	}
+
 
 	private static int createWallet(Connection con) {
 		System.out.println("Creating wallet...");

@@ -1,4 +1,4 @@
-package modelo;
+package model;
 
 import java.util.Date;
 
@@ -24,6 +24,10 @@ public class Participante {
 		this.setSituacao(situacao);
 		this.setCpf(cpf);
 		this.setNome(nome);
+	}
+
+	public Participante(Integer id) {
+		this.id = id;
 	}
 	
 	public String toString() {

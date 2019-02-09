@@ -22,22 +22,6 @@ public class DBUtils {
 		return con;
 	}
 
-	public static void listConnectionWarnings(Connection con) {
-		SQLWarning warning = null;
-		try {
-			warning = con.getWarnings();
-			if (warning == null) {
-				System.out.println("No warnings...");
-			}
-			while (warning != null) {
-				System.out.println("Warning: " + warning);
-				warning = warning.getNextWarning();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	public static void closeConnection(Connection con) {
 		try {
 			if(con != null) {
