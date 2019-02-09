@@ -2,7 +2,7 @@ import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 import java.util.HashSet;
 import java.util.Set;
-import routes.HelloWorld;
+import routes.User;
 
 //Defines the base URI for all resource URIs.
 @ApplicationPath("/")
@@ -12,7 +12,7 @@ public class MyApplication extends Application {
 	@Override
 	public Set<Class<?>> getClasses() {
 		HashSet h = new HashSet<Class<?>>();
-		h.add( HelloWorld.class );
+		h.add( User.class );
 		return h;
 	}
 }
