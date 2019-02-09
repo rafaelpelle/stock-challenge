@@ -1,0 +1,96 @@
+﻿Art. 22. O Participante Ativo, Vinculado ou Suspenso poderá optar pelo Instituto do
+Resgate parcial ou total desde que não esteja em gozo de nenhum benefício previsto
+neste Regulamento. Parágrafo Único: O pagamento do Resgate estará sujeito a um prazo de carência de
+36 (trinta e seis) meses contados a partir da data de inscrição neste Plano de
+Benefícios.
+OU SEJA:
+ - Pagamento do resgate só após a carência de 36 meses (?)
+
+
+
+Art. 23. O Resgate corresponderá ao valor do Saldo de Conta Individual na data da
+opção, de forma parcial, a ser exercido durante a fase contributiva ou total, por
+desligamento deste Plano, conforme disposto no contrato específico, e o disposto nos
+incisos e parágrafos deste Artigo.
+OU SEJA:
+ - O saldo considerado é o saldo na data em que o participante solicita o resgate;
+ - Resgate de forma parcial -> durante a fase contributiva;
+ - Resgate de forma total -> por desligamento do plano;
+
+
+
+§ 1º. Os valores que compõem o Saldo de Conta Individual do participante,
+decorrentes das Contribuições Normais previstas no plano de custeio, somente
+poderão ser resgatados em sua totalidade quando ocorrer o desligamento deste
+Plano, observado o prazo de carência previsto no Parágrafo Único do Artigo 22.
+OU SEJA:
+ - Resgate de forma total do saldo relativo à contribuições normais, só com o desligamento do plano (após carência de 36 meses)
+
+
+
+§ 2º. Observado o prazo de carência previsto no Parágrafo Único do Artigo 22, é
+facultado ao Participante o resgate parcial ou total das seguintes parcelas do Saldo
+de Conta, a ser exercido durante a fase contributiva e sem a obrigatoriedade de seu
+desligamento deste Plano:
+I. A qualquer tempo, valores oriundos de Portabilidade, constituídos em Planos de
+Previdência Complementar ou Sociedade Seguradora;
+II. A qualquer tempo, valores oriundos de Contribuições Adicionais, mensais ou
+eventuais, do Participante;
+III. Até vinte por cento dos valores oriundos das Contribuições Normais vertidas a
+este Plano pelo Participante, a cada dois anos.
+OU SEJA:
+ - Não precisa desligar do plano pra resgatar, a qualquer momento após carência de 36 meses:
+	- Saldo oriundo de portabilidade (outro plano); 
+	- Saldo de plano de previdência complementar;
+	- Saldo de sociedade seguradora;
+	- Saldo de contribuições adicionais;
+ - Não precisa desligar do plano pra resgatar, 1x a cada 2 anos:
+	- 20% do saldo de contribuições normais;
+
+
+
+§ 3º. A opção pelo Resgate parcial deverá ser requerida pelo Participante em
+formulário específico.
+
+
+
+§ 4º. O montante referente ao Resgate será liberado no prazo de até 30 (trinta) dias a
+partir da data do recebimento do requerimento pela Entidade, respeitado o prazo de
+carência previsto no parágrafo 5o deste Artigo.14
+
+
+
+§ 5º. O Resgate total terá caráter irrevogável e irretratável e seu exercício implicará
+no cancelamento da inscrição do Participante neste Plano, extinguindo‐se, com o seu
+pagamento, todo e qualquer compromisso do Plano para com o Participante e/ou
+seus Beneficiários.
+
+
+
+§ 6º. Por opção única e exclusiva do Participante Ativo, Vinculado ou Suspenso, o
+Resgate poderá ser pago em até 60 (sessenta) parcelas mensais e consecutivas,
+reajustadas mensalmente pela variação da Cota Patrimonial, de acordo com o Perfil
+de Investimentos escolhido pelo Participante, prevista no Artigo 63 deste
+Regulamento.
+
+
+
+Tipos de situação:
+ - Ativo
+ - Cancelado
+ - Benefício
+ - Vinculado
+ - Suspenso
+
+Tipos de transação:
+ - contribuicaoNormal
+ - contribuicaoAdicional
+ - contribuicaoPortabilidade
+ - contribuicaoPlanoPrevComplementar
+ - contribuicaoSociedadeSeguradora
+ - resgateNormal
+ - resgateAdicional
+ - resgatePortabilidade
+ - resgatePlanoPrevComplementar
+ - resgateSociedadeSeguradora
+ - resgateTotal
