@@ -2,6 +2,7 @@ import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 import java.util.HashSet;
 import java.util.Set;
+import routes.HelloWorld;
 
 //Defines the base URI for all resource URIs.
 @ApplicationPath("/")
