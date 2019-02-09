@@ -3,10 +3,10 @@ import java.sql.*;
 import modelo.Participante;
 
 class ScriptCriacaoDeParticipante {
-	   static final String JDBC_DRIVER = "com.filemaker.jdbc.Driver";  
-	   static final String DB_URL = "jdbc:filemaker://localhost/database";
-	   static final String DB_USER = "Admin";
-	   static final String DB_PASS = "password";
+	private static final String JDBC_DRIVER = "com.filemaker.jdbc.Driver";
+	private static final String DB_URL = "jdbc:filemaker://localhost/database";
+	private static final String DB_USER = "Admin";
+	private static final String DB_PASS = "password";
 	
 	public static void main(String[ ] args) {
 		Connection con = getDBConnection();
@@ -21,9 +21,9 @@ class ScriptCriacaoDeParticipante {
 	
 	private static int createWallet(Connection con) {
 		System.out.println("Creating wallet...");
-		String sqlQuery = "INSERT INTO Carteira (contribuicaoNormal, contribuicaoAdicional, contribuicaoPortabilidade, contribuicaoPlanoPrevComplementar, contribuicaoSociedadeSeguradora)"
-				+ "VALUES (0, 0, 0, 0, 0)";
-		PreparedStatement stmt = null;
+		String sqlQuery = "INSERT INTO Carteira (contribuicaoNormal, contribuicaoAdicional, contribuicaoPortabilidade, " +
+				"contribuicaoPlanoPrevComplementar, contribuicaoSociedadeSeguradora) VALUES (0, 0, 0, 0, 0)";
+		PreparedStatement stmt;
 		int idCarteira = -1;
 		try {
 			stmt = con.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS);
@@ -65,7 +65,7 @@ class ScriptCriacaoDeParticipante {
 		return id;
 	}
 	
-	public static Connection getDBConnection() {
+	private static Connection getDBConnection() {
 		// register the JDBC client driver
 		try {
 			Driver d = (Driver)Class.forName(JDBC_DRIVER).newInstance();
@@ -81,8 +81,8 @@ class ScriptCriacaoDeParticipante {
 		}
 		return con;
 	}
-	
-	public static void listConnectionWarnings(Connection con) {
+
+	private static void listConnectionWarnings(Connection con) {
 		// get connection warnings
 		SQLWarning warning = null;
 		try {
