@@ -1,5 +1,4 @@
 package handlers;
-import model.Carteira;
 import model.Transacao;
 
 import java.sql.*;
@@ -8,9 +7,9 @@ public class DepositHandler {
 	public static Integer handleDeposit(Transacao tran) {
 		Connection con = DBHandler.getDBConnection();
 		Integer idTransacao = createTransaction(con, tran);
-		Integer idParticipante = UserHandler.handleGetUserByCPF(tran.getCpfParticipante()).getId();
+		Integer idParticipante = UserHandler.selectUser(con, tran.getCpfParticipante()).getId();
 		linkTransacionAndUser(con, idTransacao, idParticipante);
-		Integer idCarteira = depositInUserWallet(con, tran);
+		depositInUserWallet(con, tran);
 		DBHandler.closeConnection(con);
 		return idTransacao;
 	}
@@ -42,7 +41,9 @@ public class DepositHandler {
 
 	private static void linkTransacionAndUser(Connection con, Integer idTransacao, Integer idParticipante) {
 		System.out.println("Creating link between transaction and user...");
-//		String sqlQuery = String.format("INSERT INTO Transacao_Participante (idParticipante, idTransacao) SELECT id, %d FROM Participante WHERE Participante.cpf = '%s'", idTransacao, cpf);
+		// to-do: Da pra pegar o valor de Participante.id e inserir em Transacao_Participante.idParticipante na mesma query?
+		// a query a seguir retorna uma exceção do FileMaker reclamando da sintaxe.
+		// String sqlQuery = String.format("INSERT INTO Transacao_Participante (idParticipante, idTransacao) SELECT id, %d FROM Participante WHERE Participante.cpf = '%s'", idTransacao, cpf);
 		String sqlQuery = String.format("INSERT INTO Transacao_Participante (idParticipante, idTransacao) VALUES (%d, %d)", idParticipante, idTransacao);
 		PreparedStatement stmt;
 		try {

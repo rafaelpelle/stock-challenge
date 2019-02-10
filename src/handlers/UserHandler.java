@@ -61,7 +61,8 @@ public class UserHandler {
 		return car;
 	}
 
-	private static Participante selectUser(Connection con, String userCPF) {
+	// package-private method
+	static Participante selectUser(Connection con, String userCPF) {
 		System.out.println("Selecting user...");
 		String sqlQuery = String.format("SELECT * FROM Participante WHERE cpf = '%s'", userCPF);
 		Statement stmt = null;

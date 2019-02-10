@@ -16,7 +16,7 @@ public class Deposit {
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response depositContribuicaoNormal(String transacaoJSON) {
+	public Response makeADeposit(String transacaoJSON) {
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		Transacao tran = gson.fromJson(transacaoJSON, Transacao.class);
 		Integer value = tran.getQtdParcelas()*tran.getValorParcela();
