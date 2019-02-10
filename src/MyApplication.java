@@ -2,6 +2,8 @@ import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 import java.util.HashSet;
 import java.util.Set;
+
+import routes.Deposit;
 import routes.User;
 
 //Defines the base URI for all resource URIs.
@@ -13,6 +15,8 @@ public class MyApplication extends Application {
 	public Set<Class<?>> getClasses() {
 		HashSet h = new HashSet<Class<?>>();
 		h.add( User.class );
+		h.add( Deposit.class );
+		h.add( Deposit.class );
 		return h;
 	}
 }

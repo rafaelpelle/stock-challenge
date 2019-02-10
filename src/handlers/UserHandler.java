@@ -39,7 +39,7 @@ public class UserHandler {
 	}
 
 	private static Carteira selectUserWallet(Connection con, String userCPF) {
-		System.out.println("Selecting user...");
+		System.out.println("Selecting user wallet...");
 		String sqlQuery = String.format("SELECT * FROM Carteira WHERE id IN (SELECT idCarteira FROM Participante WHERE cpf = '%s') ", userCPF);
 		Statement stmt = null;
 		Carteira car = new Carteira();
@@ -84,7 +84,7 @@ public class UserHandler {
 	}
 
 	private static ArrayList<Participante> selectAllUsers(Connection con) {
-		System.out.println("Selecting user...");
+		System.out.println("Selecting all users...");
 		String sqlQuery = "SELECT * FROM Participante";
 		Statement stmt = null;
 		ArrayList<Participante> parList = new ArrayList<Participante>();

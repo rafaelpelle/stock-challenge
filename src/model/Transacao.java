@@ -3,6 +3,7 @@ import java.util.Date;
 
 public class Transacao {
     private Integer id;
+    private String cpfParticipante;
     private Integer valorParcela;
     private Integer qtdParcelas;
     private String tipo;
@@ -17,39 +18,36 @@ public class Transacao {
     public Integer getId() {
         return this.id;
     }
-
     public void setId(Integer id) {
         this.id = id;
     }
-
+    public String getCpfParticipante() {
+        return this.cpfParticipante;
+    }
+    public void setCpfParticipante(String cpf) {
+        this.cpfParticipante = cpf;
+    }
     public Integer getValorParcela() {
         return this.valorParcela;
     }
-
     public void setValorParcela(Integer valorParcela) {
         this.valorParcela = valorParcela;
     }
-
     public Integer getQtdParcelas() {
         return this.qtdParcelas;
     }
-
     public void setQtdParcelas(Integer qtdParcelas) {
         this.qtdParcelas = qtdParcelas;
     }
-
     public String getTipo() {
         return this.tipo;
     }
-
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
-
     public Date getData() {
         return this.data;
     }
-
     public void setData(Date data) {
         this.data = data;
     }
