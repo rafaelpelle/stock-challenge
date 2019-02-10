@@ -1,6 +1,10 @@
 package handlers;
-import model.Participante;
+import java.util.Date;
+import java.util.ArrayList;
 import java.sql.*;
+
+import model.Carteira;
+import model.Participante;
 
 public class UserHandler {
 	public static Participante handleGetUserByCPF(String cpf) {
@@ -8,6 +12,13 @@ public class UserHandler {
 		Participante par = selectUser(con, cpf);
 		DBUtils.closeConnection(con);
 		return par;
+	}
+
+	public static Carteira handleGetUserWalletByCPF(String cpf) {
+		Connection con = DBUtils.getDBConnection();
+		Carteira car = selectUserWallet(con, cpf);
+		DBUtils.closeConnection(con);
+		return car;
 	}
 
 	public static Integer handleUserCreation(Participante par) {
@@ -20,9 +31,32 @@ public class UserHandler {
 		return id;
 	}
 
+	private static Carteira selectUserWallet(Connection con, String userCPF) {
+		System.out.println("Selecting user...");
+		String sqlQuery = String.format("SELECT * FROM Carteira WHERE id IN (SELECT idCarteira FROM Participante WHERE cpf = '%s') ", userCPF);
+		Statement stmt = null;
+		Carteira car = new Carteira();
+		try {
+			stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(sqlQuery);
+			while(rs.next()){
+				car.setId(rs.getInt("id"));
+				car.setContribuicaoNormal(rs.getInt("contribuicaoNormal"));
+				car.setContribuicaoAdicional(rs.getInt("contribuicaoAdicional"));
+				car.setContribuicaoPortabilidade(rs.getInt("contribuicaoPortabilidade"));
+				car.setContribuicaoPlanoPrevComplementar(rs.getInt("contribuicaoPlanoPrevComplementar"));
+				car.setContribuicaoSociedadeSeguradora(rs.getInt("contribuicaoSociedadeSeguradora"));
+				car.calculateTotalBalance();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return car;
+	}
+
 	private static Participante selectUser(Connection con, String userCPF) {
 		System.out.println("Selecting user...");
-		String sqlQuery = "SELECT * FROM Participante WHERE cpf = " + userCPF;
+		String sqlQuery = String.format("SELECT * FROM Participante WHERE cpf = '%s'", userCPF);
 		Statement stmt = null;
 		Participante par = new Participante(-1);
 		try {
@@ -40,6 +74,29 @@ public class UserHandler {
 			e.printStackTrace();
 		}
 		return par;
+	}
+
+	private static ArrayList<Participante> selectAllUsers(Connection con) {
+		System.out.println("Selecting user...");
+		String sqlQuery = "SELECT * FROM Participante";
+		Statement stmt = null;
+		ArrayList<Participante> parList = new ArrayList<Participante>();
+		try {
+			stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(sqlQuery);
+			while(rs.next()){
+				Integer id = rs.getInt("id");
+				Integer idCarteira = rs.getInt("idCarteira");
+				Date dataInscricao = rs.getDate("dataInscricao");
+				String situacao = rs.getString("situacao");
+				String cpf = rs.getString("cpf");
+				String nome  = rs.getString("nome");
+				parList.add(new Participante(id, idCarteira, dataInscricao, situacao, cpf, nome));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return parList;
 	}
 
 
