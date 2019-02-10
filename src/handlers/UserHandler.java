@@ -7,27 +7,34 @@ import model.Carteira;
 import model.Participante;
 
 public class UserHandler {
+	public static ArrayList<Participante> handleGetAllUsers() {
+		Connection con = DBHandler.getDBConnection();
+		ArrayList<Participante> allUsers = selectAllUsers(con);
+		DBHandler.closeConnection(con);
+		return allUsers;
+	}
+
 	public static Participante handleGetUserByCPF(String cpf) {
-		Connection con = DBUtils.getDBConnection();
+		Connection con = DBHandler.getDBConnection();
 		Participante par = selectUser(con, cpf);
-		DBUtils.closeConnection(con);
+		DBHandler.closeConnection(con);
 		return par;
 	}
 
 	public static Carteira handleGetUserWalletByCPF(String cpf) {
-		Connection con = DBUtils.getDBConnection();
+		Connection con = DBHandler.getDBConnection();
 		Carteira car = selectUserWallet(con, cpf);
-		DBUtils.closeConnection(con);
+		DBHandler.closeConnection(con);
 		return car;
 	}
 
 	public static Integer handleUserCreation(Participante par) {
-		Connection con = DBUtils.getDBConnection();
+		Connection con = DBHandler.getDBConnection();
 		Integer idCarteira = createWallet(con);
 		par.setSituacao("Ativo");
 		par.setIdCarteira(idCarteira);
 		Integer id = createUser(con, par);
-		DBUtils.closeConnection(con);
+		DBHandler.closeConnection(con);
 		return id;
 	}
 

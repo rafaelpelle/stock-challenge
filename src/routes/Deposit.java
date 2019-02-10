@@ -6,30 +6,13 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import handlers.UserHandler;
-import java.util.ArrayList;
+import handlers.DepositHandler;
 import model.Carteira;
 import model.Participante;
 
 
-@Path("/user")
-public class User {
-
-	@GET
-	@Path("/all")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAllUsers() {
-		ArrayList<Participante> allUsersList = UserHandler.handleGetAllUsers();
-		Integer listSize = allUsersList.size();
-		Participante[] allUsers = allUsersList.toArray(new Participante[listSize]);
-		if (listSize > 0) {
-			Gson gson = new GsonBuilder().setPrettyPrinting().create();
-			String allUsersJSON = gson.toJson(allUsers);
-			return Response.status(200).entity(allUsersJSON).build();
-		} else {
-			String errorJSON = "{\"errorMsg\": \"It wasn't possible to find any user\"}";
-			return Response.status(400).entity(errorJSON).build();
-		}
-	}
+@Path("/deposit")
+public class Deposit {
 
 	@GET
 	@Path("/{cpf}")
@@ -64,21 +47,4 @@ public class User {
 			return Response.status(400).entity(errorJSON).build();
 		}
 	}
-
-	@GET
-	@Path("/wallet/{cpf}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getUserWalletByCPF(@PathParam("cpf") String cpf) {
-		Carteira car = UserHandler.handleGetUserWalletByCPF(cpf);
-		Integer id = car.getId();
-		if (id > 0) {
-			Gson gson = new GsonBuilder().setPrettyPrinting().create();
-			String userJSON = gson.toJson(car);
-			return Response.status(200).entity(userJSON).build();
-		} else {
-			String errorJSON = "{\"errorMsg\": \"It wasn't possible to find the wallet from user " + cpf + "\"}";
-			return Response.status(400).entity(errorJSON).build();
-		}
-	}
-
 }

@@ -1,7 +1,7 @@
 package handlers;
 import java.sql.*;
 
-public class DBUtils {
+public class DBHandler {
 	private static final String JDBC_DRIVER = "com.filemaker.jdbc.Driver";
 	private static final String DB_URL = "jdbc:filemaker://localhost/database";
 	private static final String DB_USER = "Admin";
