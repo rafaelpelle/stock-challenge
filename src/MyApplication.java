@@ -2,9 +2,9 @@ import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 import java.util.HashSet;
 import java.util.Set;
-
-import routes.Deposit;
-import routes.User;
+import routes.DepositRoutes;
+import routes.UserRoutes;
+import routes.WithdrawRoutes;
 
 //Defines the base URI for all resource URIs.
 @ApplicationPath("/")
@@ -14,8 +14,9 @@ public class MyApplication extends Application {
 	@Override
 	public Set<Class<?>> getClasses() {
 		HashSet h = new HashSet<Class<?>>();
-		h.add( User.class );
-		h.add( Deposit.class );
+		h.add( UserRoutes.class );
+		h.add( DepositRoutes.class );
+		h.add( WithdrawRoutes.class );
 		return h;
 	}
 }

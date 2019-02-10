@@ -7,20 +7,20 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import handlers.UserHandler;
 import java.util.ArrayList;
-import model.Carteira;
-import model.Participante;
+import model.Wallet;
+import model.User;
 
 
 @Path("/user")
-public class User {
+public class UserRoutes {
 
 	@GET
 	@Path("/all")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllUsers() {
-		ArrayList<Participante> allUsersList = UserHandler.handleGetAllUsers();
+		ArrayList<User> allUsersList = UserHandler.handleGetAllUsers();
 		Integer listSize = allUsersList.size();
-		Participante[] allUsers = allUsersList.toArray(new Participante[listSize]);
+		User[] allUsers = allUsersList.toArray(new User[listSize]);
 		if (listSize > 0) {
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 			String allUsersJSON = gson.toJson(allUsers);
@@ -35,7 +35,7 @@ public class User {
 	@Path("/{cpf}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getUserByCPF(@PathParam("cpf") String cpf) {
-		Participante par = UserHandler.handleGetUserByCPF(cpf);
+		User par = UserHandler.handleGetUserByCPF(cpf);
 		Integer id = par.getId();
 		if (id > 0) {
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -53,8 +53,8 @@ public class User {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response postUser(String userJSON) {
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
-		Participante newUser = gson.fromJson(userJSON, Participante.class);
-		String nome = newUser.getNome();
+		User newUser = gson.fromJson(userJSON, User.class);
+		String nome = newUser.getName();
 		Integer id = UserHandler.handleUserCreation(newUser);
 		if (id > 0) {
 			String successJSON = "{\"successMsg\": \"It was possible to create user " + nome + "\"}";
@@ -69,7 +69,7 @@ public class User {
 	@Path("/wallet/{cpf}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getUserWalletByCPF(@PathParam("cpf") String cpf) {
-		Carteira car = UserHandler.handleGetUserWalletByCPF(cpf);
+		Wallet car = UserHandler.handleGetUserWalletByCPF(cpf);
 		Integer id = car.getId();
 		if (id > 0) {
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();

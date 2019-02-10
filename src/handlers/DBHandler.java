@@ -3,9 +3,9 @@ import java.sql.*;
 
 public class DBHandler {
 	private static final String JDBC_DRIVER = "com.filemaker.jdbc.Driver";
-	private static final String DB_URL = "jdbc:filemaker://localhost/database";
+	private static final String DB_URL = "jdbc:filemaker://localhost/stock-db";
 	private static final String DB_USER = "Admin";
-	private static final String DB_PASS = "password";
+	private static final String DB_PASS = "Admin";
 
 	public static Connection getDBConnection() {
 		try {

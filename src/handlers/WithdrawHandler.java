@@ -3,19 +3,29 @@ import model.Transaction;
 
 import java.sql.*;
 
-public class DepositHandler {
-	public static Integer handleDeposit(Transaction tran) {
-		Connection con = DBHandler.getDBConnection();
-		Integer userId = UserHandler.selectUser(con, tran.getUserCpf()).getId();
-		tran.setUserId(userId);
-		Integer transactionId = createDepositTransaction(con, tran);
-		depositToUserWallet(con, tran);
-		DBHandler.closeConnection(con);
-		return transactionId;
+public class WithdrawHandler {
+	public static Integer handleWithdraw(Transaction tran) {
+		Boolean isPossible = checkWithdrawIsPossible(tran);
+		if(isPossible) {
+			Connection con = DBHandler.getDBConnection();
+			Integer userId = UserHandler.selectUser(con, tran.getUserCpf()).getId();
+			tran.setUserId(userId);
+			Integer transactionId = createWithdrawTransaction(con, tran);
+			withdrawFromUserWallet(con, tran);
+			DBHandler.closeConnection(con);
+			return transactionId;
+		} else {
+			return -1;
+		}
 	}
 
-	// to-do: Duplicated code (WithdrawHandler.createWithdrawTransaction)
-	private static int createDepositTransaction(Connection con, Transaction tran) {
+	private static Boolean checkWithdrawIsPossible(Transaction tran) {
+		return true;
+		// todo regras de negócio
+	}
+
+	// to-do: Duplicated code (DepositHandler.createDepositTransaction)
+	private static int createWithdrawTransaction(Connection con, Transaction tran) {
 		System.out.println("Creating transaction...");
 		Integer userId = tran.getUserId();
 		String type = tran.getType();
@@ -41,12 +51,12 @@ public class DepositHandler {
 		return transactionId;
 	}
 
-	private static Integer depositToUserWallet(Connection con, Transaction tran) {
-		System.out.println("Depositing to user wallet...");
+	private static Integer withdrawFromUserWallet(Connection con, Transaction tran) {
+		System.out.println("Withdrawing from user wallet...");
 		String columnName = tran.getType();
 		Integer totalValue = tran.getNumberOfInstallments() * tran.getInstallmentValue();
 		String cpf = tran.getUserCpf();
-		String sqlQuery = String.format("UPDATE \"Wallet\" SET %s = %s + %d WHERE id IN (SELECT walletId FROM \"User\" WHERE cpf = '%s')", columnName, columnName, totalValue, cpf);
+		String sqlQuery = String.format("UPDATE \"Wallet\" SET %s = %s - %d WHERE id IN (SELECT walletId FROM \"User\" WHERE cpf = '%s')", columnName, columnName, totalValue, cpf);
 		PreparedStatement stmt;
 		int depositId = -1;
 		try {

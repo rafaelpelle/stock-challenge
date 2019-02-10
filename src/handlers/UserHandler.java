@@ -2,124 +2,123 @@ package handlers;
 import java.util.Date;
 import java.util.ArrayList;
 import java.sql.*;
-
-import model.Carteira;
-import model.Participante;
+import model.User;
+import model.Wallet;
 
 public class UserHandler {
-	public static ArrayList<Participante> handleGetAllUsers() {
+	public static ArrayList<User> handleGetAllUsers() {
 		Connection con = DBHandler.getDBConnection();
-		ArrayList<Participante> allUsers = selectAllUsers(con);
+		ArrayList<User> allUsers = selectAllUsers(con);
 		DBHandler.closeConnection(con);
 		return allUsers;
 	}
 
-	public static Participante handleGetUserByCPF(String cpf) {
+	public static User handleGetUserByCPF(String cpf) {
 		Connection con = DBHandler.getDBConnection();
-		Participante par = selectUser(con, cpf);
+		User user = selectUser(con, cpf);
 		DBHandler.closeConnection(con);
-		return par;
+		return user;
 	}
 
-	public static Carteira handleGetUserWalletByCPF(String cpf) {
+	public static Wallet handleGetUserWalletByCPF(String cpf) {
 		Connection con = DBHandler.getDBConnection();
-		Carteira car = selectUserWallet(con, cpf);
+		Wallet wallet = selectUserWallet(con, cpf);
 		DBHandler.closeConnection(con);
-		return car;
+		return wallet;
 	}
 
-	public static Integer handleUserCreation(Participante par) {
+	public static Integer handleUserCreation(User user) {
 		Connection con = DBHandler.getDBConnection();
-		Integer idCarteira = createWallet(con);
-		par.setSituacao("Ativo");
-		par.setIdCarteira(idCarteira);
-		Integer id = createUser(con, par);
+		Integer walletId = createWallet(con);
+		user.setStatus("Active");
+		user.setWalletId(walletId);
+		Integer id = createUser(con, user);
 		DBHandler.closeConnection(con);
 		return id;
 	}
 
-	private static Carteira selectUserWallet(Connection con, String userCPF) {
+	private static Wallet selectUserWallet(Connection con, String userCPF) {
 		System.out.println("Selecting user wallet...");
-		String sqlQuery = String.format("SELECT * FROM Carteira WHERE id IN (SELECT idCarteira FROM Participante WHERE cpf = '%s') ", userCPF);
+		String sqlQuery = String.format("SELECT * FROM \"Wallet\" WHERE id IN (SELECT walletId FROM \"User\" WHERE cpf = '%s')", userCPF);
 		Statement stmt = null;
-		Carteira car = new Carteira();
+		Wallet wallet = new Wallet();
 		try {
 			stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(sqlQuery);
 			while(rs.next()){
-				car.setId(rs.getInt("id"));
-				car.setContribuicaoNormal(rs.getInt("contribuicaoNormal"));
-				car.setContribuicaoAdicional(rs.getInt("contribuicaoAdicional"));
-				car.setContribuicaoPortabilidade(rs.getInt("contribuicaoPortabilidade"));
-				car.setContribuicaoPlanoPrevComplementar(rs.getInt("contribuicaoPlanoPrevComplementar"));
-				car.setContribuicaoSociedadeSeguradora(rs.getInt("contribuicaoSociedadeSeguradora"));
-				car.calculateTotalBalance();
+				wallet.setId(rs.getInt("id"));
+				wallet.setRegularContribution(rs.getInt("regularContribution"));
+				wallet.setAdditionalContribution(rs.getInt("additionalContribution"));
+				wallet.setPortabilityContribution(rs.getInt("portabilityContribution"));
+				wallet.setSupplementaryPlanContribution(rs.getInt("supplementaryPlanContribution"));
+				wallet.setInsuranceCompanyContribution(rs.getInt("insuranceCompanyContribution"));
+				wallet.calculateTotalBalance();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return car;
+		return wallet;
 	}
 
 	// package-private method
-	static Participante selectUser(Connection con, String userCPF) {
+	static User selectUser(Connection con, String userCPF) {
 		System.out.println("Selecting user...");
-		String sqlQuery = String.format("SELECT * FROM Participante WHERE cpf = '%s'", userCPF);
+		String sqlQuery = String.format("SELECT * FROM \"User\" WHERE cpf = '%s'", userCPF);
 		Statement stmt = null;
-		Participante par = new Participante(-1);
+		User user = new User(-1);
 		try {
 			stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(sqlQuery);
 			while(rs.next()){
-				par.setId(rs.getInt("id"));
-				par.setIdCarteira(rs.getInt("idCarteira"));
-				par.setDataInscricao(rs.getDate("dataInscricao"));
-				par.setSituacao(rs.getString("situacao"));
-				par.setCpf(rs.getString("cpf"));
-				par.setNome(rs.getString("nome"));
+				user.setId(rs.getInt("id"));
+				user.setWalletId(rs.getInt("walletId"));
+				user.setRegistrationDate(rs.getDate("registrationDate"));
+				user.setStatus(rs.getString("status"));
+				user.setCpf(rs.getString("cpf"));
+				user.setName(rs.getString("name"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return par;
+		return user;
 	}
 
-	private static ArrayList<Participante> selectAllUsers(Connection con) {
+	private static ArrayList<User> selectAllUsers(Connection con) {
 		System.out.println("Selecting all users...");
-		String sqlQuery = "SELECT * FROM Participante";
+		String sqlQuery = "SELECT * FROM \"User\"";
 		Statement stmt = null;
-		ArrayList<Participante> parList = new ArrayList<Participante>();
+		ArrayList<User> userList = new ArrayList<User>();
 		try {
 			stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(sqlQuery);
 			while(rs.next()){
 				Integer id = rs.getInt("id");
-				Integer idCarteira = rs.getInt("idCarteira");
-				Date dataInscricao = rs.getDate("dataInscricao");
-				String situacao = rs.getString("situacao");
+				Integer walletId = rs.getInt("walletId");
+				Date registrationDate = rs.getDate("registrationDate");
+				String status = rs.getString("status");
 				String cpf = rs.getString("cpf");
-				String nome  = rs.getString("nome");
-				parList.add(new Participante(id, idCarteira, dataInscricao, situacao, cpf, nome));
+				String name  = rs.getString("name");
+				userList.add(new User(id, walletId, registrationDate, status, cpf, name));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return parList;
+		return userList;
 	}
 
 
 	private static int createWallet(Connection con) {
 		System.out.println("Creating wallet...");
-		String sqlQuery = "INSERT INTO Carteira (contribuicaoNormal, contribuicaoAdicional, contribuicaoPortabilidade, " +
-				"contribuicaoPlanoPrevComplementar, contribuicaoSociedadeSeguradora) VALUES (0, 0, 0, 0, 0)";
+		String sqlQuery = "INSERT INTO \"Wallet\" (regularContribution, additionalContribution, portabilityContribution, " +
+				"supplementaryPlanContribution, insuranceCompanyContribution) VALUES (0, 0, 0, 0, 0)";
 		PreparedStatement stmt;
-		int idCarteira = -1;
+		int walletId = -1;
 		try {
 			stmt = con.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS);
 			stmt.executeUpdate();
 			try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
 				if (generatedKeys.next()) {
-					idCarteira = generatedKeys.getInt(1);
+					walletId = generatedKeys.getInt(1);
 				}
 				else {
 					throw new SQLException("Creating wallet failed, no ID obtained.");
@@ -128,13 +127,13 @@ public class UserHandler {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return idCarteira;
+		return walletId;
 	}
 
-	private static int createUser(Connection con, Participante par) {
+	private static int createUser(Connection con, User par) {
 		System.out.println("Creating user...");
-		String sqlQuery = "INSERT INTO Participante (situacao, cpf, nome, idCarteira) VALUES ('"
-				+ par.getSituacao() + "', '" + par.getCpf() + "', '" + par.getNome() + "', " + par.getIdCarteira() + ")";
+		String sqlQuery = "INSERT INTO \"User\" (status, cpf, name, walletId) VALUES ('"
+				+ par.getStatus() + "', '" + par.getCpf() + "', '" + par.getName() + "', " + par.getWalletId() + ")";
 		PreparedStatement stmt = null;
 		int id = -1;
 		try {
