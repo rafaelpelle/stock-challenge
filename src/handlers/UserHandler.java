@@ -37,7 +37,7 @@ public class UserHandler {
 		return id;
 	}
 
-	private static Wallet selectUserWallet(Connection con, String userCPF) {
+	public static Wallet selectUserWallet(Connection con, String userCPF) {
 		System.out.println("Selecting user wallet...");
 		String sqlQuery = String.format("SELECT * FROM \"Wallet\" WHERE id IN (SELECT walletId FROM \"User\" WHERE cpf = '%s')", userCPF);
 		Statement stmt = null;
