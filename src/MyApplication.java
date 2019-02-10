@@ -16,7 +16,6 @@ public class MyApplication extends Application {
 		HashSet h = new HashSet<Class<?>>();
 		h.add( User.class );
 		h.add( Deposit.class );
-		h.add( Deposit.class );
 		return h;
 	}
 }
