@@ -3,10 +3,8 @@ import model.Transaction;
 import model.Wallet;
 import model.User;
 import java.sql.*;
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.ZoneId;
-import java.util.Calendar;
+import java.time.*;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 public class WithdrawHandler {
@@ -34,14 +32,11 @@ public class WithdrawHandler {
 		return tran;
 	}
 
-
 	private static Boolean checkDateIsValid(Date date) {
-//		LocalDate currentDate = Calendar.getInstance().getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-//		LocalDate registrationDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-//		Integer periodBetween = Period.between(currentDate, registrationDate).getMonths();
-//		System.out.println("Period: " + periodBetween);
-//		return periodBetween >= 36;
-		return true;
+		LocalDate currentDate = LocalDate.now();
+		LocalDate registrationDate = Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
+		Long monthsBetween = ChronoUnit.MONTHS.between(registrationDate, currentDate);
+		return monthsBetween >= 36;
 	}
 
 	private static Integer createTotalWithdraw(Connection con, Transaction tran, Wallet wallet, User user) {
