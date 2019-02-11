@@ -1,0 +1,18 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" build-on-make="true" name="stock-challenge:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/stock_challenge_war_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="stock-challenge/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="stock-challenge" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="fmjdbc" />
+          <element id="library" level="project" name="Jersey-2.2" />
+          <element id="library" level="project" name="gson-2.2.2" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
