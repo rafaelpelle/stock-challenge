@@ -31,6 +31,17 @@ public class Wallet {
 		return this.totalBalance;
 	}
 
+	public Integer getSpecificBalance(String balanceType) {
+		switch(balanceType) {
+			case "regularContribution": return this.getRegularContribution();
+			case "additionalContribution": return this.getAdditionalContribution();
+			case "portabilityContribution": return this.getPortabilityContribution();
+			case "supplementaryPlanContribution": return this.getSupplementaryPlanContribution();
+			case "insuranceCompanyContribution": return this.getInsuranceCompanyContribution();
+			default: return this.calculateTotalBalance();
+		}
+	}
+
 	public Integer getId() {
 		return this.id;
 	}
