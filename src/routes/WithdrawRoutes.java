@@ -19,10 +19,10 @@ public class WithdrawRoutes {
 	public Response makeAWithdraw(String transacaoJSON) {
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		Transaction tran = gson.fromJson(transacaoJSON, Transaction.class);
-		Integer value = tran.getNumberOfInstallments()*tran.getInstallmentValue();
-		String userCpf = tran.getUserCpf();
-		Integer withdrawId = WithdrawHandler.handleWithdraw(tran);
-		if (withdrawId > 0) {
+		Transaction savedTransaction = WithdrawHandler.handleWithdraw(tran);
+		Integer value = savedTransaction.getNumberOfInstallments() * savedTransaction.getInstallmentValue();
+		String userCpf = savedTransaction.getUserCpf();
+		if (savedTransaction.getId() > 0) {
 			String successJSON = String.format("{\"successMsg\": \"It was possible to withdraw R$%d from %s\"}", value, userCpf);
 			return Response.status(200).entity(successJSON).build();
 		} else {

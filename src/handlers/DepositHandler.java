@@ -60,7 +60,6 @@ public class DepositHandler {
 					throw new SQLException("Deposit failed, no ID obtained.");
 				}
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
