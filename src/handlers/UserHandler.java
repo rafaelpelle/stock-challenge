@@ -73,6 +73,7 @@ public class UserHandler {
 				user.setId(rs.getInt("id"));
 				user.setWalletId(rs.getInt("walletId"));
 				user.setRegistrationDate(rs.getDate("registrationDate"));
+				user.setLastRegularWithdraw(rs.getDate("lastRegularWithdraw"));
 				user.setStatus(rs.getString("status"));
 				user.setCpf(rs.getString("cpf"));
 				user.setName(rs.getString("name"));

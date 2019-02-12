@@ -6,6 +6,7 @@ public class User {
 	private Integer id;
 	private Integer walletId;
 	private Date registrationDate;
+	private Date lastRegularWithdraw;
 	private String status;
 	private String cpf;
 	private String name;
@@ -29,62 +30,46 @@ public class User {
 	public User(Integer id) {
 		this.id = id;
 	}
-	
-	public String toString() {
-		return "ID: " + this.getId()
-		+ ", CPF: " + this.getCpf()
-		+ ", Nome: " + this.getName()
-		+ ", Situa��o: " + this.getStatus()
-		+ ", Data de Inscri��o: " + this.getRegistrationDate().toString()
-		+ ", ID Wallet: " + this.getWalletId();
-	}
-
 	public Integer getId() {
 		return id;
 	}
-
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
 	public Integer getWalletId() {
 		return walletId;
 	}
-
 	public void setWalletId(Integer walletId) {
 		this.walletId = walletId;
 	}
-
 	public Date getRegistrationDate() {
 		return registrationDate;
 	}
-
 	public void setRegistrationDate(Date registrationDate) {
 		this.registrationDate = registrationDate;
 	}
-
+	public Date getLastRegularWithdraw() {
+		return this.lastRegularWithdraw;
+	}
+	public void setLastRegularWithdraw(Date lastRegularWithdraw) {
+		this.lastRegularWithdraw = lastRegularWithdraw;
+	}
 	public String getStatus() {
 		return status;
 	}
-
 	public void setStatus(String status) {
 		this.status = status;
 	}
-
 	public String getCpf() {
 		return cpf;
 	}
-
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
-
 	public String getName() {
 		return name;
 	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
 }
