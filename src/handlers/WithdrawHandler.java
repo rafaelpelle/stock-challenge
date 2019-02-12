@@ -4,7 +4,6 @@ import model.Wallet;
 import model.User;
 import java.sql.*;
 import java.time.*;
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 public class WithdrawHandler {

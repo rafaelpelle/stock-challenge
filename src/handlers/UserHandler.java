@@ -133,8 +133,8 @@ public class UserHandler {
 
 	private static int createUser(Connection con, User par) {
 		System.out.println("Creating user...");
-		String sqlQuery = "INSERT INTO \"User\" (status, cpf, name, walletId) VALUES ('"
-				+ par.getStatus() + "', '" + par.getCpf() + "', '" + par.getName() + "', " + par.getWalletId() + ")";
+		String sqlQuery = "INSERT INTO \"User\" (status, cpf, name, walletId, lastRegularWithdraw) VALUES ('"
+				+ par.getStatus() + "', '" + par.getCpf() + "', '" + par.getName() + "', " + par.getWalletId() + ", CURRENT_DATE)";
 		PreparedStatement stmt = null;
 		int id = -1;
 		try {
