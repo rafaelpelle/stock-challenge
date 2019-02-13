@@ -1,0 +1,88 @@
+////////////////////////
+ -- ROTAS DE USUÁRIO -- 
+////////////////////////
+
+GET - /user/all
+Retorna uma lista com todos os usuários cadastrados.
+
+GET - /user/{cpf}
+Retorna um usuário específico, se já estiver cadastrado.
+
+GET - /user/wallet/{cpf}
+Retorna a carteira de um usuário específico, se já estiver cadastrado.
+
+PUT - /user
+Cadastra um novo usuário. id, walletId, registrationDate, lasRegularWithdraw e status não são necessários pois são inseridos automaticamente.
+Ex de request body:
+{  
+    "id": null,
+    "walletId": null,
+    "registrationDate": null,
+    "lastRegularWithdraw": null,
+    "status": null,
+    "name":"Rafael Pelle",
+    "cpf":"08194709962"
+}
+
+
+////////////////////////
+ -- ROTAS DE DEPÓSITO -- 
+////////////////////////
+POST
+/deposit
+Cadastra no sistema uma nova transação de depósito. id e date não são necessários pois são inseridos automaticamente.
+O valor de "type" indica qual o tipo de deposíto está sendo feito (qual coluna da Wallet vai aumentar de valor no banco de dados).
+Ex de request body (depósito de contribuição regular):
+{  
+    "id":null,
+    "userCpf":"08194709962",
+    "installmentValue":200,
+    "numberOfInstallments":1,
+    "type": "regularContribution",
+    "date": null
+}
+Ex de request body (depósito de contribuição adicional):
+{  
+    "id":null,
+    "userCpf":"08194709962",
+    "installmentValue":200,
+    "numberOfInstallments":1,
+    "type": "additionalContribution",
+    "date": null
+}
+
+////////////////////////
+ -- ROTAS DE RESGATE -- 
+////////////////////////
+POST
+/withdraw
+Cadastra no sistema uma nova transação de resgate. id e date não são necessários pois são inseridos automaticamente.
+O valor de "type" indica qual o tipo de resgate está sendo feito (qual coluna da Wallet vai diminuir de valor no banco de dados).
+Ex de request body (resgate de contribuição regular):
+{  
+    "id":null,
+    "userCpf":"08194709962",
+    "installmentValue":200,
+    "numberOfInstallments":1,
+    "type": "regularContribution",
+    "date": null
+}
+Ex de request body (resgate de contribuição adicional):
+{  
+    "id":null,
+    "userCpf":"08194709962",
+    "installmentValue":200,
+    "numberOfInstallments":1,
+    "type": "additionalContribution",
+    "date": null
+}
+Ex de request body (resgate total):
+{  
+    "id":null,
+    "userCpf":"08194709962",
+    "installmentValue":200,
+    "numberOfInstallments":1,
+    "type": "totalWithdraw",
+    "date": null
+}
+
